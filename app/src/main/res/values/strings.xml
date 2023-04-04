@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ToDoListFireBase</string>
+    <string name="app_name">ToDo List</string>
     <string name="title_app">ToDo App</string>
     <string name="Register">Sing Up</string>
     <string name="Login">Login</string>
@@ -10,6 +10,7 @@
     <string name="createAccount">Create Account</string>
     <string name="startedNow">to get started now!</string>
     <string name="singUpWith">Or Sing Up With</string>
+    <string name="noTaskRegister">No task register</string>
     <string name="google">Google</string>
     <string name="facebook">Facebook</string>
 

@@ -1,28 +1,21 @@
-package com.example.todolistfirebase.controller;
+package com.example.todolistfirebase.controller.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.todolistfirebase.R;
-import com.example.todolistfirebase.model.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.todolistfirebase.controller.manager.FireBaseController;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText txtName, txtEmail, txtPassword, txtConfirmPassword;
@@ -36,6 +29,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
 
+    FireBaseController fireBaseController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +38,12 @@ public class RegisterActivity extends AppCompatActivity {
         syncronizeFirebase();
         syncronizeWidget();
         btnRegister.setOnClickListener(v -> {
-            writeNewUser("1", txtName.getText().toString(), txtEmail.getText().toString(), txtPassword.getText().toString());
+            writeNewUser( txtName.getText().toString(), txtEmail.getText().toString(), txtPassword.getText().toString());
         });
     }
 
     private void syncronizeFirebase() {
+        fireBaseController = new FireBaseController(this);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -62,23 +58,13 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
     }
 
-    private void writeNewUser(String userId, String name, String email, String password) {
+    private void writeNewUser(String name, String email, String password) {
         if (validateInputs(name, email, password, txtConfirmPassword.getText().toString()) == 0) {
-            firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    String token = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-                    if (task.isSuccessful()) {
-                        collectionReference.document(token).set(new User(name, email, token));
-                        Toast.makeText(RegisterActivity.this, "REGISTRADO", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(RegisterActivity.this, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            //TODO: Comprobar q no exista el usuario dentro de la funcion createUserEmailPassword
+            fireBaseController.createUserEmailPassword(name, email, password);
+            //TODO: Hacer un if para comprobar si se ha creado el usuario, si es que si se guarda en sharedpreferences el token y se redirige a la actividad principal
+            Intent intent = new Intent(this, MenuActivity.class);
+            startActivity(intent);
         }
     }
 

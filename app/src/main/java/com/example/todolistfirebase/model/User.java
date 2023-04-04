@@ -1,5 +1,6 @@
 package com.example.todolistfirebase.model;
 
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.digest.DigestUtils;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.ArrayList;
@@ -17,15 +18,18 @@ public class User {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String name,String email,String token) {
+    public User(String name,String email,String token,String password) {
         this.name = name;
         this.email = email;
+        this.password = encryptPassword(password);
         this.token = token;
         this.tasks = new ArrayList<>();
-        Task task = new Task("Task 1", "Description 1");
-        this.tasks.add(task);
-        Task task2 = new Task("Task 2", "Description 2");
-        this.tasks.add(task2);
+
+    }
+
+    private String encryptPassword(String password){
+        password = DigestUtils.md5Hex(password);
+        return password;
     }
 
 

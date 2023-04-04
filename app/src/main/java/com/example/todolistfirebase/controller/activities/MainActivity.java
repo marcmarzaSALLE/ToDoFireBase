@@ -1,23 +1,19 @@
-package com.example.todolistfirebase.controller;
+package com.example.todolistfirebase.controller.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.todolistfirebase.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.todolistfirebase.controller.manager.SharedPreferencesController;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     Button btnLogin, btnRegister;
+    SharedPreferencesController sharedPreferencesController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         syncronizedWigets();
         btnLogin.setOnClickListener(v -> {
-            Log.d("Login", "Login");
+           checkToken();
         });
         btnRegister.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
@@ -34,11 +30,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void syncronizedWigets() {
+        sharedPreferencesController = new SharedPreferencesController();
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
     }
     private void updateUI(FirebaseUser user) {
 
+    }
+
+    private void checkToken(){
+        String token = sharedPreferencesController.loadDateSharedPreferences(this);
+        Intent intent;
+        if(token != null){
+            intent = new Intent(MainActivity.this, MenuActivity.class);
+        }else{
+            intent = new Intent(MainActivity.this, LoginActivity.class);
+        }
+        startActivity(intent);
     }
 
 }

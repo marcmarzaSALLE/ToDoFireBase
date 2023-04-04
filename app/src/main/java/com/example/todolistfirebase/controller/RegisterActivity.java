@@ -62,22 +62,36 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
     }
 
-    public void writeNewUser(String userId, String name, String email, String password) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                String token = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-                if (task.isSuccessful()) {
-                    collectionReference.document(token).set(new User(name,email,token));
-                    Toast.makeText(RegisterActivity.this, "REGISTRADO", Toast.LENGTH_SHORT).show();
+    private void writeNewUser(String userId, String name, String email, String password) {
+        if (validateInputs(name, email, password, txtConfirmPassword.getText().toString()) == 0) {
+            firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    String token = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+                    if (task.isSuccessful()) {
+                        collectionReference.document(token).set(new User(name, email, token));
+                        Toast.makeText(RegisterActivity.this, "REGISTRADO", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RegisterActivity.this, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(RegisterActivity.this, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
 
+
+    private int validateInputs(String txtName, String txtEmail, String txtPassword, String txtConfirmPassword) {
+        if (txtName.isEmpty() || txtEmail.isEmpty() || txtPassword.isEmpty() || txtConfirmPassword.isEmpty()) {
+            Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
+            return 1;
+        }
+        if (!txtPassword.equals(txtConfirmPassword)) {
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            return 1;
+        }
+        return 0;
     }
 }

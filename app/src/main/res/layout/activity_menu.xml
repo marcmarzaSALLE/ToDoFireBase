@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/txtTitle"
-        android:layout_width="215dp"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
         android:fontFamily="cursive"
         android:gravity="center"

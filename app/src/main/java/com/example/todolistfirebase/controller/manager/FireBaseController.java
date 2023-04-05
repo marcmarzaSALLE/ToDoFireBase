@@ -20,9 +20,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FireBaseController {
 
-    private boolean correct = false;
+    private boolean correct;
+    public String msg;
     private final FirebaseAuth mAuth;
     private final FirebaseFirestore db;
+
+    public int count=0;
     private final CollectionReference collectionReference;
     private DatabaseReference databaseReference;
     SharedPreferencesController sharedPreferencesController;
@@ -39,6 +42,7 @@ public class FireBaseController {
     }
 
     public void createUserEmailPassword(String name, String email, String password) {
+
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -46,12 +50,15 @@ public class FireBaseController {
                 if (task.isSuccessful()) {
                     collectionReference.document(token).set(new User(name, email, token, password));
                     FireBaseController.this.saveToken(token);
+                    FireBaseController.this.correct();
+                    FireBaseController.this.msg = "Usuario creado correctamente";
                 }
             }
         }).addOnFailureListener(e -> {
             Log.wtf("WTF", e.getMessage());
-
+            FireBaseController.this.msg = e.getMessage();
         });
+        getCorrect();
     }
 
     public void login(String email, String password) {
@@ -64,9 +71,19 @@ public class FireBaseController {
                 }
             }
         });
+
     }
 
     public void saveToken(String token) {
         sharedPreferencesController.saveDateSharedPreferences(token, context);
+        correct = true;
     }
+    public  void correct(){
+        sharedPreferencesController.saveCorrect( context, true);
+    }
+
+    public void getCorrect(){
+       Log.wtf("Correct","PRUEBA :" + sharedPreferencesController.loadCorrect(context));
+    }
+
 }

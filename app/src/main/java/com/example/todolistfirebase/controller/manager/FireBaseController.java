@@ -5,18 +5,24 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.todolistfirebase.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FireBaseController {
 
@@ -25,7 +31,7 @@ public class FireBaseController {
     private final FirebaseAuth mAuth;
     private final FirebaseFirestore db;
 
-    public int count=0;
+    public int count = 0;
     private final CollectionReference collectionReference;
     private DatabaseReference databaseReference;
     SharedPreferencesController sharedPreferencesController;
@@ -41,49 +47,51 @@ public class FireBaseController {
         this.context = context;
     }
 
-    public void createUserEmailPassword(String name, String email, String password) {
+    public void createUserEmailPassword(String name, String email, String password, OnCompleteListener<AuthResult> onCompleteListener, OnFailureListener onFailureListener) {
 
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                String token = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                if (task.isSuccessful()) {
-                    collectionReference.document(token).set(new User(name, email, token, password));
-                    FireBaseController.this.saveToken(token);
-                    FireBaseController.this.correct();
-                    FireBaseController.this.msg = "Usuario creado correctamente";
-                }
-            }
-        }).addOnFailureListener(e -> {
-            Log.wtf("WTF", e.getMessage());
-            FireBaseController.this.msg = e.getMessage();
-        });
-        getCorrect();
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(onCompleteListener).addOnFailureListener(onFailureListener);
     }
 
-    public void login(String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    String token = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                    FireBaseController.this.saveToken(token);
-                }
-            }
-        });
+    public void login(String email, String password, OnCompleteListener<AuthResult> onCompleteListener) {
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(onCompleteListener);
 
     }
 
     public void saveToken(String token) {
         sharedPreferencesController.saveDateSharedPreferences(token, context);
-        correct = true;
-    }
-    public  void correct(){
-        sharedPreferencesController.saveCorrect( context, true);
     }
 
-    public void getCorrect(){
-       Log.wtf("Correct","PRUEBA :" + sharedPreferencesController.loadCorrect(context));
+    public void getUserDataFromDataBase(String token) {
+        db.collection("ToDoList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (Objects.equals(document.get("token"), token)) {
+                            Log.wtf("TAG", document.getId() + " => " + document.getData());
+                        }
+
+                    }
+
+                }
+            }
+        });
     }
 
+
+    public void addTaskToUser(com.example.todolistfirebase.model.Task task, OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
+        DocumentReference documentReference = db.collection("ToDoList").document(getToken());
+        documentReference.update("tasks", FieldValue.arrayUnion(task)).addOnCompleteListener(onCompleteListener).addOnFailureListener(onFailureListener);
+    }
+
+    public String getToken() {
+        return sharedPreferencesController.loadDateSharedPreferences(context);
+    }
+
+    public void getTasksFromUser(OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        CollectionReference collectionReference = db.collection("ToDoList");
+        collectionReference.whereEqualTo("token",getToken()).get().addOnCompleteListener(onCompleteListener);
+
+    }
 }

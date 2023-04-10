@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="HintTextStyle" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="MyCustomTextInputStyle" parent="Widget.Design.TextInputLayout">
+        <item name="android:textColorHint">@color/black</item>
+        <item name="hintTextAppearance">@style/HintTextStyle</item>
+    </style>
+</resources>

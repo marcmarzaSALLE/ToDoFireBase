@@ -12,8 +12,7 @@ public class SharedPreferencesController {
 
     public String loadDateSharedPreferences(Context context){
         SharedPreferences sharedPref = context.getSharedPreferences("tokens", MODE_PRIVATE);
-        String token = sharedPref.getString("token", null);
-        return token;
+        return sharedPref.getString("token", null);
     }
 
     public void saveDateSharedPreferences(String token, Context context){

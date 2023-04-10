@@ -16,7 +16,7 @@
             android:exported="false" />
         <activity
             android:name=".controller.activities.RegisterActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".controller.activities.LoginActivity"
             android:exported="false" />

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/color_background_principal"
     android:orientation="vertical"
+    android:background="@drawable/background_light_blue"
     android:shape="rectangle">
 
     <ScrollView
@@ -30,7 +30,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/createAccount"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="35sp"
                     android:textStyle="bold" />
 
@@ -40,7 +40,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/startedNow"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="35sp" />
             </LinearLayout>
 
@@ -53,17 +53,20 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
+
                 <EditText
                     android:id="@+id/txtName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="name"
                     android:background="@drawable/edittext_background"
+                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawablePadding="5dp"
                     android:hint="@string/Name"
                     android:inputType="text"
                     android:padding="15dp"
-                    android:textColorHint="@color/white"
-                    android:textSize="15sp" />
+                    android:textColorHint="@color/black"
+                    android:textSize="17sp" />
 
                 <EditText
                     android:id="@+id/txtEmail"
@@ -72,11 +75,13 @@
                     android:layout_marginTop="10dp"
                     android:autofillHints="emailAddress"
                     android:background="@drawable/edittext_background"
+                    android:drawableStart="@drawable/baseline_email_24"
+                    android:drawablePadding="5dp"
                     android:hint="@string/Email"
                     android:inputType="textEmailAddress"
                     android:padding="15dp"
-                    android:textColorHint="@color/white"
-                    android:textSize="15sp" />
+                    android:textColorHint="@color/black"
+                    android:textSize="17sp" />
 
                 <EditText
                     android:id="@+id/txtPassword"
@@ -85,11 +90,13 @@
                     android:layout_marginTop="10dp"
                     android:autofillHints="password"
                     android:background="@drawable/edittext_background"
+                    android:drawableStart="@drawable/baseline_lock_24"
+                    android:drawablePadding="5dp"
                     android:hint="@string/Password"
                     android:inputType="textPassword"
                     android:padding="15dp"
-                    android:textColorHint="@color/white"
-                    android:textSize="15sp" />
+                    android:textColorHint="@color/black"
+                    android:textSize="17sp" />
 
                 <EditText
                     android:id="@+id/txtConfirmPassword"
@@ -98,11 +105,13 @@
                     android:layout_marginTop="10dp"
                     android:autofillHints="password"
                     android:background="@drawable/edittext_background"
+                    android:drawableStart="@drawable/baseline_lock_24"
+                    android:drawablePadding="5dp"
                     android:hint="@string/ConfirmPassword"
                     android:inputType="textPassword"
                     android:padding="15dp"
-                    android:textColorHint="@color/white"
-                    android:textSize="15sp" />
+                    android:textColorHint="@color/black"
+                    android:textSize="17sp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnRegister"
@@ -113,7 +122,7 @@
                     android:padding="15dp"
                     android:text="@string/Register"
                     android:textAllCaps="false"
-                    android:textSize="15sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -135,7 +144,7 @@
                         android:layout_height="2dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:background="@color/white" />
+                        android:background="@color/black" />
 
                     <!-- Agrega el texto en el centro -->
                     <TextView
@@ -144,7 +153,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/singUpWith"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="20sp" />
 
                     <!-- Agrega la línea derecha -->
@@ -154,7 +163,7 @@
                         android:layout_height="2dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:background="@color/white" />
+                        android:background="@color/black" />
 
                 </RelativeLayout>
             </LinearLayout>

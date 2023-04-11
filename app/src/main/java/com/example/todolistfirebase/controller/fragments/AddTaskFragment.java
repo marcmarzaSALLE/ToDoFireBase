@@ -1,5 +1,7 @@
 package com.example.todolistfirebase.controller.fragments;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.todolistfirebase.R;
@@ -18,18 +24,29 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.AuthResult;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
+
 
 public class AddTaskFragment extends Fragment {
     Button btnAddTask;
-    EditText edtTaskName, edtTaskDescription;
+    EditText edtTaskName, edtTaskDescription, edtTaskDate, edtTaskTime;
 
     FireBaseController fireBaseController;
+
+    Spinner spinnerTypeTask;
+    List<String> typeTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_task, container, false);
         syncronizedWidget(view);
+        adaptateSpinner();
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,9 +58,16 @@ public class AddTaskFragment extends Fragment {
                     if (taskDescription.isEmpty())
                         edtTaskDescription.setError("Please fill this field");
                 } else {
-                    getDataWidget();
+                    checkDateTime();
                 }
             }
+        });
+
+        edtTaskDate.setOnClickListener(v -> {
+            showDateDialog();
+        });
+        edtTaskTime.setOnClickListener(v -> {
+            showTimeDialog();
         });
         return view;
     }
@@ -53,12 +77,71 @@ public class AddTaskFragment extends Fragment {
         btnAddTask = view.findViewById(R.id.btnSaveTask);
         edtTaskName = view.findViewById(R.id.edtTextTitleTask);
         edtTaskDescription = view.findViewById(R.id.edtDescriptionTask);
+        edtTaskDate = view.findViewById(R.id.edtDateTask);
+        edtTaskTime = view.findViewById(R.id.edtTimeTask);
+        spinnerTypeTask = view.findViewById(R.id.spnCategory);
+        typeTask = Arrays.asList(getResources().getStringArray(R.array.typeTask));
+    }
+
+    private void adaptateSpinner() {
+        spinnerTypeTask.setAdapter(new ArrayAdapter<String>(requireContext(), R.layout.spinner_layout, typeTask));
+    }
+
+    private void showDateDialog() {
+        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                final String selectedDate;
+                Calendar cal = Calendar.getInstance();
+                cal.set(year, month, day);
+                String format = "dd/MM/yyyy";
+                selectedDate = new SimpleDateFormat(format).format(cal.getTime());
+                edtTaskDate.setText(selectedDate);
+            }
+        });
+
+        newFragment.show(getParentFragmentManager(), "datePicker");
+    }
+
+    private void showTimeDialog() {
+        TimePickerFragment newFragment = TimePickerFragment.newInstance(new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                final String selectedTime = hourOfDay + ":" + minute;
+                edtTaskTime.setText(selectedTime);
+            }
+        });
+        newFragment.show(getParentFragmentManager(), "timePicker");
+
+    }
+
+    private void checkDateTime() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Calendar dateTimeCal = Calendar.getInstance();
+        String dateText = edtTaskDate.getText().toString();
+        String timeText = edtTaskTime.getText().toString();
+        String finalDate = dateText + " " + timeText;
+        try {
+            dateTimeCal.setTime(dateFormat.parse(finalDate));
+            if (dateTimeCal.compareTo(calendar) > 0) {
+                getDataWidget();
+            } else {
+                Toast.makeText(requireContext(), getResources().getString(R.string.errorDate), Toast.LENGTH_SHORT).show();
+
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getDataWidget() {
         String taskName = edtTaskName.getText().toString();
         String taskDescription = edtTaskDescription.getText().toString();
-        Task task = new Task(taskName, taskDescription);
+        String taskDate = edtTaskDate.getText().toString();
+        String taskTime = edtTaskTime.getText().toString();
+        String taskType = spinnerTypeTask.getSelectedItem().toString();
+        Task task = new Task(taskType,taskName, taskDescription, taskDate, taskTime);
         fireBaseController.addTaskToUser(task, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(com.google.android.gms.tasks.Task<AuthResult> t) {
@@ -77,4 +160,6 @@ public class AddTaskFragment extends Fragment {
             }
         });
     }
+
+
 }

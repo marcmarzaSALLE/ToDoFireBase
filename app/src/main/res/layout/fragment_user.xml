@@ -15,7 +15,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
         android:gravity="start"
-
         android:text="@string/userInfo"
         android:textColor="@color/black"
         android:textSize="40sp"
@@ -28,7 +27,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@color/black" />
-
 
     <TextView
         android:layout_width="match_parent"
@@ -66,6 +64,9 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="30dp"
+            android:autoSizeMaxTextSize="25sp"
+            android:autoSizeMinTextSize="12sp"
+            android:autoSizeTextType="uniform"
             android:drawablePadding="20dp"
             android:gravity="start"
             android:textColor="@color/black"
@@ -98,8 +99,11 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="30dp"
-            android:lines="1"
+            android:autoSizeMaxTextSize="25sp"
+            android:autoSizeMinTextSize="12sp"
+            android:autoSizeTextType="uniform"
             android:gravity="start"
+            android:lines="1"
             android:textColor="@color/black"
             android:textSize="25sp" />
     </LinearLayout>
@@ -131,31 +135,27 @@
             android:layout_marginEnd="30dp"
             android:gravity="start"
             android:textColor="@color/black"
-            android:textSize="25sp"/>
+            android:textSize="25sp" />
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:gravity="end">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnLogOut"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-
-            android:layout_marginStart="37dp"
+            android:layout_gravity="bottom"
             android:layout_marginTop="37dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="37dp"
+            android:layout_marginStart="20dp"
             android:background="@drawable/btn_background_logout"
             android:hint="@string/logOut"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:textSize="20sp"
             app:drawableEndCompat="@drawable/baseline_logout_24" />
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

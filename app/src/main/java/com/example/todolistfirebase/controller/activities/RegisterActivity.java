@@ -1,17 +1,22 @@
 package com.example.todolistfirebase.controller.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.todolistfirebase.R;
 import com.example.todolistfirebase.controller.manager.FireBaseController;
 import com.example.todolistfirebase.model.User;
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +33,8 @@ import java.util.Objects;
 public class RegisterActivity extends AppCompatActivity {
     EditText editTxtName, editTxtEmail, editTxtPassword, editTxtConfirmPassword;
     Button btnRegister;
+    ImageButton btnGoogle;
+
     FirebaseAuth mAuth;
     FirebaseFirestore firebaseFirestore;
 
@@ -40,15 +47,39 @@ public class RegisterActivity extends AppCompatActivity {
 
     FireBaseController fireBaseController;
 
+    private SignInClient onTapClient;
+    private BeginSignInRequest signInRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         syncronizeFirebase();
         syncronizeWidget();
+        btnGoogle.setOnClickListener(v -> {
+            onTapClient = Identity.getSignInClient(this);
+            signInRequest = new BeginSignInRequest.Builder()
+                    .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
+                            .setSupported(true)
+                            .build())
+                    .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                            .setSupported(true)
+                            .setServerClientId(getString(R.string.default_web_client_id))
+                            .build()).setAutoSelectEnabled(true).build();
+
+
+        });
         btnRegister.setOnClickListener(v -> {
             writeNewUser(editTxtName.getText().toString(), editTxtEmail.getText().toString(), editTxtPassword.getText().toString());
         });
+    }
+
+    private void autenticacionGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
     }
 
     private void syncronizeFirebase() {
@@ -65,11 +96,12 @@ public class RegisterActivity extends AppCompatActivity {
         editTxtPassword = findViewById(R.id.txtPassword);
         editTxtConfirmPassword = findViewById(R.id.txtConfirmPassword);
         btnRegister = findViewById(R.id.btnRegister);
+        btnGoogle = findViewById(R.id.btnGoogle);
     }
 
     private void writeNewUser(String name, String email, String password) {
         if (validateInputs(name, email, password, editTxtConfirmPassword.getText().toString()) == 0) {
-            fireBaseController.createUserEmailPassword(name, email, password,  new OnCompleteListener<AuthResult>() {
+            fireBaseController.createUserEmailPassword(name, email, password, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
@@ -82,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
 
                 }
-            },new OnFailureListener() {
+            }, new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     editTxtEmail.setError("El email ya existe");

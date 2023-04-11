@@ -1,17 +1,43 @@
 package com.example.todolistfirebase.model;
+import com.example.todolistfirebase.R;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
+import java.util.HashMap;
+
 @IgnoreExtraProperties
-public class Task {
+public class Task implements Serializable {
     public String name;
     public String description;
+
+    public String typeTask;
+
+    public String date;
+    public String time;
 
     public Task() {
     }
 
-    public Task(String name, String description) {
+    public Task(String typeTask,String name, String description,String date,String time) {
+        this.typeTask = typeTask;
         this.name = name;
         this.description = description;
+        this.date = date;
+        this.time = time;
+    }
+
+    public String getTypeTask() {
+        return typeTask;
+    }
+
+
+    public String getDate() {
+        return date;
+    }
+
+
+    public String getTime() {
+        return time;
     }
 
     public String getName() {
@@ -26,7 +52,15 @@ public class Task {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public Integer getIconOfTypeTask(){
+        HashMap<String,Integer> iconTypeTask = new HashMap<>();
+        iconTypeTask.put("Homework", R.drawable.baseline_school_64);
+        iconTypeTask.put("Shop", R.drawable.baseline_shopping_cart_64);
+        iconTypeTask.put("Dinner", R.drawable.baseline_dinner_dining_64);
+        iconTypeTask.put("Fitness", R.drawable.baseline_fitness_center_64);
+        iconTypeTask.put("Study", R.drawable.baseline_menu_book_64);
+        iconTypeTask.put("Other", R.drawable.baseline_more_horiz_64);
+        return iconTypeTask.get(getTypeTask());
+
     }
 }

@@ -57,6 +57,7 @@ public class MenuListFragment extends Fragment {
         fireBaseController.getUserDataFromDataBase(fireBaseController.getToken());
         switch (menuTask.getId()) {
             case 1:
+
                 if (this.numTaskPlanned != 0) {
                     Toast.makeText(requireContext(), getResources().getString(R.string.noTaskRegister), Toast.LENGTH_SHORT).show();
                 } else {
@@ -80,4 +81,6 @@ public class MenuListFragment extends Fragment {
         addData();
         return view;
     }
+
+
 }

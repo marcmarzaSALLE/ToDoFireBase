@@ -178,6 +178,7 @@
                 android:padding="5dp">
 
                 <ImageButton
+                    android:id="@+id/btnGoogle"
                     android:layout_width="140dp"
                     android:layout_height="50dp"
                     android:layout_gravity="start"

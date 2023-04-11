@@ -94,4 +94,6 @@ public class FireBaseController {
         collectionReference.whereEqualTo("token",getToken()).get().addOnCompleteListener(onCompleteListener);
 
     }
+
+
 }

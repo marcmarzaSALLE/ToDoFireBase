@@ -1,6 +1,7 @@
 package com.example.todolistfirebase.controller.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,16 +54,21 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView txtViewTitleTask;
+        ImageView imgViewIconTask;
         ViewHolder(View itemView){
             super(itemView);
             txtViewTitleTask = itemView.findViewById(R.id.txtNameTask);
+            imgViewIconTask = itemView.findViewById(R.id.imgIconTask);
         }
         void bindData(final Task task){
             txtViewTitleTask.setText(task.getName());
+            Log.wtf("icon", task.getIconOfTypeTask()+"");
+            imgViewIconTask.setImageResource(task.getIconOfTypeTask());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.onItemClick(task);
+
                 }
             });
         }

@@ -4,71 +4,157 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_light_blue"
     android:orientation="vertical"
+    android:shape="rectangle"
     tools:context=".controller.fragments.AddTaskFragment">
 
-    <TextView
-        android:id="@+id/txtTitleActivity"
-        android:layout_width="336dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:fontFamily="serif-monospace"
-        android:gravity="center"
-        android:text="@string/newTask"
-        android:textColor="@color/black"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:typeface="normal" />
-
-    <EditText
-        android:id="@+id/edtTextTitleTask"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/edittext_background_add"
-        android:ems="10"
-        android:hint="@string/titleTask"
-        android:inputType="textPersonName"
-        android:lines="1"
-        android:maxLength="30"
-        android:padding="10dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/edtDescriptionTask"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/edittext_background_add"
-        android:ems="10"
-        android:gravity="top"
-        android:hint="@string/descriptionTask"
-        android:inputType="textPersonName"
-        android:maxLength="300"
-        android:padding="5dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSaveTask"
-        android:layout_width="134dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/btn_background_save"
-        android:padding="10dp"
-        android:text="@string/saveTask"
-        android:textStyle="bold"
-        app:drawableRightCompat="@drawable/baseline_save_24" />
 
+            <TextView
+                android:id="@+id/txtTitleActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:gravity="start"
+                android:text="@string/newTask"
+                android:textColor="@color/black"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:typeface="normal" />
+
+            <Spinner
+                android:id="@+id/spnCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="30dp"
+                android:popupBackground="#E6FFFFFF"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/edtTextTitleTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/edittext_background_add"
+                android:ems="10"
+                android:hint="@string/titleTask"
+                android:inputType="textPersonName"
+                android:lines="1"
+                android:maxLength="30"
+                android:padding="10dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="25sp" />
+
+            <EditText
+                android:id="@+id/edtDescriptionTask"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/edittext_background_add"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="@string/descriptionTask"
+                android:inputType="textPersonName"
+                android:maxLength="300"
+                android:padding="5dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtDateTask"
+                    android:layout_width="161dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="30dp"
+                    android:background="@drawable/edittext_background_add"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/date"
+                    android:inputType="date"
+                    android:maxLines="1"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+
+
+                <EditText
+                    android:id="@+id/edtTimeTask"
+                    android:layout_width="161dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:autofillHints="10"
+                    android:background="@drawable/edittext_background_add"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/time"
+                    android:inputType="date"
+                    android:maxLines="1"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:gravity="end">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSaveTask"
+                    android:layout_width="134dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/btn_background_save"
+                    android:padding="10dp"
+                    android:text="@string/saveTask"
+                    android:textColor="#51B300"
+                    android:textStyle="bold"
+                    app:drawableRightCompat="@drawable/baseline_save_24" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
 
 </LinearLayout>

@@ -27,6 +27,7 @@ import org.checkerframework.checker.units.qual.A;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class TaskListFragment extends Fragment {
     private FireBaseController fireBaseController;
@@ -50,7 +51,11 @@ public class TaskListFragment extends Fragment {
         listTaskAdapter = new ListTaskAdapter(tasks, requireContext(), new ListTaskAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Task task) {
-                Log.wtf("TAG", "onItemClick: " + task.getName());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("task", task);
+                ShowInformationFragment showInformationFragment = new ShowInformationFragment();
+                showInformationFragment.setArguments(bundle);
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout, showInformationFragment).commit();
             }
         });
         recyclerView.setHasFixedSize(true);

@@ -57,6 +57,7 @@
     <string name="confirmPasswordRequired">Confirm password is required</string>
     <string name="passwordNotMatch">Password not match</string>
     <string name="emailExist">Email already exist</string>
+    <string name="task">Task:</string>
 
     <string-array name="typeTask">
         <item>@string/homework</item>

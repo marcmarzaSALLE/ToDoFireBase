@@ -120,7 +120,6 @@ public class TaskListFragment extends Fragment {
                 if(task.isSuccessful()){
                     Log.wtf("TAG", "onComplete: " + task1.getName());
                     tasks.remove(position);
-                    fm.beginTransaction().replace(R.id.fragmentLayout, new MenuListFragment()).commit();
                     listTaskAdapter.notifyItemRemoved(position);
                     listTaskAdapter.notifyItemRangeChanged(position, tasks.size());
                     listTaskAdapter.notifyDataSetChanged();

@@ -50,8 +50,12 @@ public class ShowInformationFragment extends Fragment {
     }
 
     private void getDataWidget() {
-        txtTaskName.setText(task.getName());
-        txtTaskDescription.setText(task.getDescription());
+        String name = task.getName();
+        name = name.substring(0, 1).toUpperCase() + name.substring(1);
+        txtTaskName.setText(name);
+        String description = task.getDescription();
+        description = description.substring(0, 1).toUpperCase() + description.substring(1);
+        txtTaskDescription.setText(description);
         txtTaskDate.setText(task.getDate());
         txtTaskTime.setText(task.getTime());
         if(task.getTypeTask().equals("")||task.getTypeTask()==null){

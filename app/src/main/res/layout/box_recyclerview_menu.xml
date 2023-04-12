@@ -11,6 +11,7 @@
     android:animateLayoutChanges="true"
     android:clickable="true"
     android:focusable="true"
+    app:cardBackgroundColor="#DFDFDF"
     app:cardCornerRadius="20dp"
     app:cardElevation="25dp"
     app:cardUseCompatPadding="true"
@@ -18,10 +19,10 @@
     >
 
     <LinearLayout
-        android:background="@drawable/edittext_background_add"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_gravity="center"
+        android:background="@drawable/edittext_background_add"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -73,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="SubText"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
             </LinearLayout>
 

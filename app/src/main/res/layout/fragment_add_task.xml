@@ -11,7 +11,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,12 +80,12 @@
                 android:ems="10"
                 android:gravity="top"
                 android:hint="@string/descriptionTask"
+                android:inputType="textMultiLine"
                 android:maxLength="300"
+                android:maxLines="10"
                 android:padding="5dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:maxLines="10"
-                android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="20sp" />
@@ -135,26 +135,31 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:gravity="end">
+                android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSaveTask"
-                    android:layout_width="134dp"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="20dp"
-                    android:background="@drawable/btn_background_save"
-                    android:padding="10dp"
-                    android:text="@string/saveTask"
-                    android:textColor="#51B300"
-                    android:textStyle="bold"
-                    app:drawableRightCompat="@drawable/baseline_save_24" />
+                    android:gravity="end">
 
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnSaveTask"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="37dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/btn_background_save"
+                        android:padding="10dp"
+                        android:text="@string/saveTask"
+                        android:textColor="#51B300"
+                        android:textStyle="bold"
+                        app:drawableRightCompat="@drawable/baseline_save_24" />
+
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
-
 
     </ScrollView>
 

@@ -117,8 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
             }, new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    editTxtEmail.setError("El email ya existe");
-                    Toast.makeText(RegisterActivity.this, "Error al crear el usuario", Toast.LENGTH_SHORT).show();
+                    editTxtEmail.setError(getResources().getString(R.string.emailExist));
                 }
             });
             //TODO: Hacer un if para comprobar si se ha creado el usuario, si es que si se guarda en sharedpreferences el token y se redirige a la actividad principal
@@ -130,23 +129,22 @@ public class RegisterActivity extends AppCompatActivity {
     private int validateInputs(String txtName, String txtEmail, String txtPassword, String txtConfirmPassword) {
         if (txtName.isEmpty() || txtEmail.isEmpty() || txtPassword.isEmpty() || txtConfirmPassword.isEmpty()) {
             if (txtName.isEmpty())
-                this.editTxtName.setError("El nombre es obligatorio");
+                this.editTxtName.setError(getResources().getString(R.string.nameRequired));
 
             if (txtEmail.isEmpty())
-                this.editTxtEmail.setError("El email es obligatorio");
+                this.editTxtEmail.setError(getResources().getString(R.string.emailRequired));
 
             if (txtPassword.isEmpty())
-                this.editTxtPassword.setError("La contraseña es obligatoria");
+                this.editTxtPassword.setError(getResources().getString(R.string.passwordRequired));
 
             if (txtConfirmPassword.isEmpty())
-                this.editTxtConfirmPassword.setError("La confirmación de la contraseña es obligatoria");
+                this.editTxtConfirmPassword.setError(getResources().getString(R.string.confirmPasswordRequired));
 
             return 1;
         }
         if (!txtPassword.equals(txtConfirmPassword)) {
-            this.editTxtPassword.setError("Las contraseñas no coinciden");
-            this.editTxtConfirmPassword.setError("Las contraseñas no coinciden");
-            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            this.editTxtPassword.setError(getResources().getString(R.string.passwordNotMatch));
+            this.editTxtConfirmPassword.setError(getResources().getString(R.string.passwordNotMatch));
             return 1;
         }
         return 0;

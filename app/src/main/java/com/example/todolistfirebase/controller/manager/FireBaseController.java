@@ -95,5 +95,10 @@ public class FireBaseController {
 
     }
 
+    public void deleteTaskFromUser(com.example.todolistfirebase.model.Task task, OnCompleteListener onCompleteListener, OnFailureListener onFailureListener) {
+        DocumentReference documentReference = db.collection("ToDoList").document(getToken());
+        documentReference.update("tasks", FieldValue.arrayRemove(task)).addOnCompleteListener(onCompleteListener).addOnFailureListener(onFailureListener);
+    }
+
 
 }

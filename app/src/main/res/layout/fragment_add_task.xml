@@ -80,11 +80,12 @@
                 android:ems="10"
                 android:gravity="top"
                 android:hint="@string/descriptionTask"
-                android:inputType="textPersonName"
                 android:maxLength="300"
                 android:padding="5dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
+                android:maxLines="10"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="20sp" />

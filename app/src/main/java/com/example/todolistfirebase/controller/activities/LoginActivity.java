@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                         startActivity(intent);
                     }else{
-                        Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, getResources().getString(R.string.errorLogin), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -69,10 +69,10 @@ public class LoginActivity extends AppCompatActivity {
     private boolean checkLogin() {
         if (edtEmail.getText().toString().isEmpty() || edtPassword.getText().toString().isEmpty()) {
             if(edtEmail.getText().toString().isEmpty()){
-                edtEmail.setError("Email is empty");
+                edtEmail.setError(getResources().getString(R.string.emailEmpty));
             }
             if(edtPassword.getText().toString().isEmpty()){
-                edtPassword.setError("Password is empty");
+                edtPassword.setError(getResources().getString(R.string.passwordEmpty));
             }
             return false;
         }

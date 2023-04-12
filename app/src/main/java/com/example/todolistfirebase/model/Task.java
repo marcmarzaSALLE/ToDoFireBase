@@ -55,7 +55,7 @@ public class Task implements Serializable {
     public Integer getIconOfTypeTask(){
         HashMap<String,Integer> iconTypeTask = new HashMap<>();
         iconTypeTask.put("Homework", R.drawable.baseline_school_64);
-        iconTypeTask.put("Shop", R.drawable.baseline_shopping_cart_64);
+        iconTypeTask.put("Shopping", R.drawable.baseline_shopping_cart_64);
         iconTypeTask.put("Dinner", R.drawable.baseline_dinner_dining_64);
         iconTypeTask.put("Fitness", R.drawable.baseline_fitness_center_64);
         iconTypeTask.put("Study", R.drawable.baseline_menu_book_64);

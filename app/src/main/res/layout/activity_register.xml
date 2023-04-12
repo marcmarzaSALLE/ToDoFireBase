@@ -130,6 +130,7 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:layout_marginTop="10dp">
 
                 <RelativeLayout
@@ -175,6 +176,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:padding="5dp">
 
                 <ImageButton

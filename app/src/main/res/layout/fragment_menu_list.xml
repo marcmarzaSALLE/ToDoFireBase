@@ -10,20 +10,42 @@
 
     <TextView
         android:id="@+id/txtTitle"
-
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
-        android:gravity="center"
-        android:text="@string/homepage"
+        android:layout_marginEnd="20dp"
+        android:gravity="center_vertical"
+        android:text="@string/Welcome"
         android:textColor="@color/black"
-        android:textSize="30sp" />
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="40sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/black" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="70dp" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp" />
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class ShowInformationFragment extends Fragment {
     private TextView txtTaskName, txtTaskDescription, txtTaskDate, txtTaskTime;
 
     private ImageView imgTypeTask;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class ShowInformationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_show_information, container, false);
         syncronizedWidget(view);
         getDataWidget();
+
         return view;
     }
 

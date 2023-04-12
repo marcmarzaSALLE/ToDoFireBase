@@ -12,15 +12,15 @@
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="20dp"
-    app:cardElevation="15dp"
+    app:cardElevation="25dp"
     app:cardUseCompatPadding="true"
 
     >
 
     <LinearLayout
-        android:background="@color/light_yellow"
+        android:background="@drawable/edittext_background_add"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="110dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal">

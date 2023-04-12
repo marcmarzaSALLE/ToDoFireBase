@@ -57,6 +57,9 @@
     <string name="confirmPasswordRequired">Confirm password is required</string>
     <string name="passwordNotMatch">Password not match</string>
     <string name="emailExist">Email already exist</string>
+    <string name="fillField">Please fill this field</string>
+    <string name="taskAddedSuccessfully">Task added successfully</string>
+    <string name="taskNotAdded">Task not added</string>
     <string name="task">Task:</string>
 
     <string-array name="typeTask">

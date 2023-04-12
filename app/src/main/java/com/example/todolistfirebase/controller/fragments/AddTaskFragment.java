@@ -54,9 +54,9 @@ public class AddTaskFragment extends Fragment {
                 String taskDescription = edtTaskDescription.getText().toString();
                 if (taskName.isEmpty() || taskDescription.isEmpty()) {
                     if (taskName.isEmpty())
-                        edtTaskName.setError("Please fill this field");
+                        edtTaskName.setError(getResources().getString(R.string.fillField));
                     if (taskDescription.isEmpty())
-                        edtTaskDescription.setError("Please fill this field");
+                        edtTaskDescription.setError(getResources().getString(R.string.fillField));
                 } else {
                     checkDateTime();
                 }
@@ -146,17 +146,17 @@ public class AddTaskFragment extends Fragment {
             @Override
             public void onComplete(com.google.android.gms.tasks.Task<AuthResult> t) {
                 if (t.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Task added successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getResources().getString(R.string.taskAddedSuccessfully), Toast.LENGTH_SHORT).show();
                     Fragment fragment = new MenuListFragment();
                     requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout, fragment).addToBackStack(null).commit();
                 } else {
-                    Toast.makeText(requireContext(), "Task not added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getResources().getString(R.string.taskNotAdded), Toast.LENGTH_SHORT).show();
                 }
             }
         }, new OnFailureListener() {
             @Override
             public void onFailure(Exception e) {
-                Toast.makeText(requireContext(), "Task not added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getResources().getString(R.string.taskNotAdded), Toast.LENGTH_SHORT).show();
             }
         });
     }

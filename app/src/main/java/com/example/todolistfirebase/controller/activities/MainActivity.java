@@ -44,9 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private void checkToken(){
         String token = sharedPreferencesController.loadDateSharedPreferences(this);
         Intent intent;
-        Log.wtf("token", token);
         if(token!=null){
-            Log.wtf("token", "null");
             finish();
             intent = new Intent(MainActivity.this, MenuActivity.class);
 

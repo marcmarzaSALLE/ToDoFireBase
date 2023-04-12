@@ -120,8 +120,6 @@ public class RegisterActivity extends AppCompatActivity {
                     editTxtEmail.setError(getResources().getString(R.string.emailExist));
                 }
             });
-            //TODO: Hacer un if para comprobar si se ha creado el usuario, si es que si se guarda en sharedpreferences el token y se redirige a la actividad principal
-
         }
     }
 

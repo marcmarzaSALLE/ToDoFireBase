@@ -83,7 +83,6 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ViewHo
 
         void bindData(final Task task) {
             txtViewTitleTask.setText(task.getName());
-            Log.wtf("icon", task.getIconOfTypeTask() + "");
             imgViewIconTask.setImageResource(task.getIconOfTypeTask());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

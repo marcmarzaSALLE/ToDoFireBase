@@ -42,7 +42,6 @@ public class TaskListFragment extends Fragment {
     RecyclerView recyclerView;
 
 
-
     private ListTaskAdapter listTaskAdapter;
 
     @Override
@@ -56,7 +55,7 @@ public class TaskListFragment extends Fragment {
     }
 
     private void addDataToAdapter(ArrayList<Task> tasks) {
-        listTaskAdapter = new ListTaskAdapter(tasks, requireContext(),getActivity() ,new ListTaskAdapter.OnItemClickListener() {
+        listTaskAdapter = new ListTaskAdapter(tasks, requireContext(), getActivity(), new ListTaskAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Task task) {
                 Bundle bundle = new Bundle();
@@ -70,7 +69,7 @@ public class TaskListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(listTaskAdapter);
 
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -79,7 +78,7 @@ public class TaskListFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                TaskListFragment.this.removeItem(position,viewHolder);
+                TaskListFragment.this.removeItem(position, viewHolder);
 
             }
 
@@ -111,14 +110,13 @@ public class TaskListFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    public void removeItem(int position, RecyclerView.ViewHolder viewHolder){
+    public void removeItem(int position, RecyclerView.ViewHolder viewHolder) {
         FragmentManager fm = ((FragmentActivity) requireContext()).getSupportFragmentManager();
         Task task1 = tasks.get(position);
         fireBaseController.deleteTaskFromUser(task1, new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task task) {
-                if(task.isSuccessful()){
-                    Log.wtf("TAG", "onComplete: " + task1.getName());
+                if (task.isSuccessful()) {
                     tasks.remove(position);
                     listTaskAdapter.notifyItemRemoved(position);
                     listTaskAdapter.notifyItemRangeChanged(position, tasks.size());
@@ -128,7 +126,7 @@ public class TaskListFragment extends Fragment {
         }, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.wtf("TAG", "onFailure: " + e.getMessage());
+                Log.d("Error", "Error al eliminar la tarea");
             }
         });
     }
@@ -141,12 +139,12 @@ public class TaskListFragment extends Fragment {
     }
 
     private void loadDataFirebaseController() {
-        fireBaseController.getTasksFromUser(new OnCompleteListener<QuerySnapshot>(){
+        fireBaseController.getTasksFromUser(new OnCompleteListener<QuerySnapshot>() {
 
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for (QueryDocumentSnapshot documentSnapshot: task.getResult()){
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                         ArrayList<Task> tasks1 = documentSnapshot.toObject(User.class).getTasks();
                         TaskListFragment.this.logData(tasks1);
                     }
@@ -157,9 +155,6 @@ public class TaskListFragment extends Fragment {
 
     private void logData(ArrayList<Task> taskList) {
         this.tasks = taskList;
-        for (Task t : taskList) {
-            Log.wtf("TAG", "logData: " + t.getName());
-        }
         addDataToAdapter(this.tasks);
     }
 

@@ -23,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         syncronizedWigets();
+        checkToken();
         btnLogin.setOnClickListener(v -> {
-           checkToken();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
         });
         txtRegister.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
@@ -37,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         txtRegister = findViewById(R.id.txtViewRegister);
     }
-    private void updateUI(FirebaseUser user) {
-
-    }
 
     private void checkToken(){
         String token = sharedPreferencesController.loadDateSharedPreferences(this);
@@ -47,12 +46,8 @@ public class MainActivity extends AppCompatActivity {
         if(token!=null){
             finish();
             intent = new Intent(MainActivity.this, MenuActivity.class);
-
-        }else{
-            finish();
-            intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
-        startActivity(intent);
     }
 
 }

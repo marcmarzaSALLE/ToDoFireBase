@@ -71,5 +71,13 @@ public class MenuActivity extends AppCompatActivity {
         transaction.replace(R.id.fragmentLayout, fragment).commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
 
+    }
 }

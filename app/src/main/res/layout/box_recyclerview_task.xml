@@ -8,6 +8,7 @@
     android:animateLayoutChanges="true"
     android:clickable="true"
     android:focusable="true"
+    android:layout_gravity="center"
     app:cardCornerRadius="20dp"
     app:cardElevation="10dp"
     app:cardBackgroundColor="#DFDFDF"
@@ -49,23 +50,45 @@
                     android:gravity="start"
                     android:src="@drawable/baseline_dinner_dining_64" />
 
-                <TextView
-                    android:id="@+id/txtNameTask"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:autoSizeMaxTextSize="25sp"
-                    android:autoSizeMinTextSize="12sp"
-                    android:autoSizeTextType="uniform"
-                    android:layout_gravity="center"
-                    android:text="12:55"
-                    android:lines="1"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="40sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/txtNameTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:autoSizeMaxTextSize="30sp"
+                        android:autoSizeMinTextSize="12sp"
+                        android:autoSizeTextType="uniform"
+                        android:layout_gravity="center"
+                        android:lines="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/txtDateTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:autoSizeMaxTextSize="25sp"
+                        android:autoSizeMinTextSize="12sp"
+                        android:autoSizeTextType="uniform"
+                        android:layout_gravity="center"
+                        android:lines="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+
 
 
             </LinearLayout>

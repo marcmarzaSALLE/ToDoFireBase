@@ -31,7 +31,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.units.qual.A;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -40,6 +45,7 @@ public class TaskListFragment extends Fragment {
     private FireBaseController fireBaseController;
     private ArrayList<Task> tasks;
     RecyclerView recyclerView;
+
 
 
     private ListTaskAdapter listTaskAdapter;
@@ -55,7 +61,7 @@ public class TaskListFragment extends Fragment {
     }
 
     private void addDataToAdapter(ArrayList<Task> tasks) {
-        listTaskAdapter = new ListTaskAdapter(tasks, requireContext(), getActivity(), new ListTaskAdapter.OnItemClickListener() {
+        listTaskAdapter = new ListTaskAdapter(tasks, requireContext(),getActivity() ,new ListTaskAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Task task) {
                 Bundle bundle = new Bundle();
@@ -69,7 +75,7 @@ public class TaskListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(listTaskAdapter);
 
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -78,7 +84,7 @@ public class TaskListFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                TaskListFragment.this.removeItem(position, viewHolder);
+                TaskListFragment.this.removeItem(position,viewHolder);
 
             }
 
@@ -110,13 +116,13 @@ public class TaskListFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    public void removeItem(int position, RecyclerView.ViewHolder viewHolder) {
+    public void removeItem(int position, RecyclerView.ViewHolder viewHolder){
         FragmentManager fm = ((FragmentActivity) requireContext()).getSupportFragmentManager();
         Task task1 = tasks.get(position);
         fireBaseController.deleteTaskFromUser(task1, new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task task) {
-                if (task.isSuccessful()) {
+                if(task.isSuccessful()){
                     tasks.remove(position);
                     listTaskAdapter.notifyItemRemoved(position);
                     listTaskAdapter.notifyItemRangeChanged(position, tasks.size());
@@ -126,7 +132,7 @@ public class TaskListFragment extends Fragment {
         }, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("Error", "Error al eliminar la tarea");
+                Log.wtf("TAG", "onFailure: " + e.getMessage());
             }
         });
     }
@@ -139,18 +145,39 @@ public class TaskListFragment extends Fragment {
     }
 
     private void loadDataFirebaseController() {
-        fireBaseController.getTasksFromUser(new OnCompleteListener<QuerySnapshot>() {
+        fireBaseController.getTasksFromUser(new OnCompleteListener<QuerySnapshot>(){
 
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot documentSnapshot: task.getResult()){
                         ArrayList<Task> tasks1 = documentSnapshot.toObject(User.class).getTasks();
-                        TaskListFragment.this.logData(tasks1);
+                        TaskListFragment.this.sortTask(tasks1);
                     }
                 }
             }
         });
+    }
+
+    public void sortTask(ArrayList<Task>taskList) {
+        taskList.sort(new Comparator<Task>() {
+            final DateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+            @Override
+            public int compare(Task t1, Task t2) {
+                try {
+                    Date dateTime1 = f.parse(t1.getDate() + " " + t1.getTime());
+                    Date dateTime2 = f.parse(t2.getDate() + " " + t2.getTime());
+                    t1.setDateTime(dateTime1);
+                    t2.setDateTime(dateTime2);
+                    assert dateTime1 != null;
+                    return dateTime1.compareTo(dateTime2);
+                } catch (ParseException e) {
+                    throw new IllegalArgumentException(e);
+                }
+            }
+        });
+        logData(taskList);
     }
 
     private void logData(ArrayList<Task> taskList) {

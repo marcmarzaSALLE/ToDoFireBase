@@ -3,6 +3,7 @@ import com.example.todolistfirebase.R;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 
 @IgnoreExtraProperties
@@ -14,7 +15,7 @@ public class Task implements Serializable {
 
     public String date;
     public String time;
-
+    private Date dateTime;
     public Task() {
     }
 
@@ -50,6 +51,10 @@ public class Task implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
     }
 
     public Integer getIconOfTypeTask(){

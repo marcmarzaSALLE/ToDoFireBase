@@ -69,7 +69,7 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtViewTitleTask;
+        TextView txtViewTitleTask, txtViewDateTask;
         ImageView imgViewIconTask;
 
         private FireBaseController fireBaseController;
@@ -78,12 +78,14 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ViewHo
             super(itemView);
             txtViewTitleTask = itemView.findViewById(R.id.txtNameTask);
             imgViewIconTask = itemView.findViewById(R.id.imgIconTask);
+            txtViewDateTask = itemView.findViewById(R.id.txtDateTime);
             fireBaseController = new FireBaseController(myActivity.getApplicationContext());
         }
 
         void bindData(final Task task) {
             txtViewTitleTask.setText(task.getName());
             imgViewIconTask.setImageResource(task.getIconOfTypeTask());
+            txtViewDateTask.setText(task.getDate());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -78,7 +78,9 @@ public class MenuListFragment extends Fragment {
     }
 
     public void addDataToWidget(User user){
-        txtUserName.setText(user.getName());
+        String nameUser = user.getName();
+        nameUser = nameUser.substring(0, 1).toUpperCase() + nameUser.substring(1);
+        txtUserName.setText(nameUser);
         this.numTaskPlanned = user.getTasks().size();
         this.tasks = user.getTasks();
         typeTasks.set(0, new MenuTask(1, R.drawable.baseline_calendar_month_24, getResources().getString(R.string.scheduled), this.numTaskPlanned+" "+ getResources().getString(R.string.tasks)));
